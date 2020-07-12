@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: ak-mix-cluster
+  region: ap-south-1
+
+nodeGroups:
+  - name: ng1
+    desiredCapacity: 1
+    instanceType: t2.micro
+    ssh:
+      publicKeyName: eksclust
+  
+  - name: ng-mix
+    minSize: 2
+    maxSize: 4
+    instancesDistribution:
+      maxPrice: 0.017
+      instanceTypes: ["t3a.nano", "t3.nano", "t2.micro"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      spotInstancePools: 2                        # A Spot Instance pool is a set of unused EC2 instances with the same instance type (for example, t3.xlarge), operating system, Availability Zone, and network platform. 
+    ssh:
+        publicKeyName: eksclust
